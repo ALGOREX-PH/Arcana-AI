@@ -30,41 +30,41 @@ const TarotDeck: React.FC<TarotDeckProps> = ({ onCardSelect }) => {
         {selectedCard ? (
           <div className={`relative w-full h-full transform transition-transform duration-1000
                           ${selectedCard.isReversed ? 'rotate-180' : ''}`}>
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-900/30 via-purple-800/20 to-purple-900/30 
-                          backdrop-blur-sm rounded-xl border border-gold/30
+            <div className="absolute inset-0 rounded-xl border border-gold/30
                           shadow-lg hover:shadow-gold/20 transition-all duration-300
-                          flex flex-col items-center justify-center p-6 space-y-4
-                          overflow-hidden">
-              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1572097662444-9d891d517060')] 
-                            opacity-10 bg-cover bg-center" />
-              <div className="relative z-10 text-center space-y-4">
-                <h3 className="font-cinzel text-2xl text-gold font-bold">
-                  {selectedCard.name}
-                </h3>
-                <div className="w-full h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
-                <p className="text-astral-blue/90 text-lg font-lora">
-                  {selectedCard.description}
-                </p>
-                <div className="w-full h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
-                <div className="text-sm text-gold/80 font-lora italic">
-                  {selectedCard.isReversed ? '(Reversed)' : '(Upright)'}
+                          overflow-hidden group">
+              <img 
+                src={selectedCard.image} 
+                alt={selectedCard.name}
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/90 p-4
+                            transition-opacity duration-300">
+                <div className="absolute bottom-4 left-4 right-4 text-center">
+                  <h3 className="font-cinzel text-xl text-gold font-bold mb-2">
+                    {selectedCard.name}
+                  </h3>
+                  <p className="text-sm text-astral-blue/90 font-lora mb-2 line-clamp-2 group-hover:line-clamp-none transition-all duration-300">
+                    {selectedCard.description}
+                  </p>
+                  <p className="text-sm text-gold/80 font-lora italic">
+                    {selectedCard.isReversed ? '(Reversed)' : '(Upright)'}
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-900/30 via-purple-800/20 to-purple-900/30
-                         backdrop-blur-sm rounded-xl border border-gold/30
+          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1572097662444-9d891d517060')] 
+                         bg-cover bg-center rounded-xl border border-gold/30
                          shadow-lg hover:shadow-gold/20 transition-all duration-300 group
-                         flex items-center justify-center cursor-pointer
-                         overflow-hidden"
+                         cursor-pointer overflow-hidden"
                onClick={shuffleAndDraw}>
-            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1572097662444-9d891d517060')] 
-                          opacity-5 group-hover:opacity-10 transition-opacity duration-300 bg-cover bg-center" />
-            <div className="relative z-10 text-gold space-y-3 text-center">
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-900/70 to-midnight/90" />
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-gold space-y-3">
               <Shuffle className="w-12 h-12 mb-2 group-hover:rotate-180 transition-transform duration-500" />
               <p className="font-cinzel text-lg">Draw a Card</p>
-              <Sparkles className="w-4 h-4 mx-auto animate-pulse" />
+              <Sparkles className="w-4 h-4 animate-pulse" />
             </div>
           </div>
         )}
