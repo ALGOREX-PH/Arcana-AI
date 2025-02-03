@@ -5,4 +5,5 @@ export interface TarotCard {
   upright: string[];
   reversed: string[];
   isReversed?: boolean;
+  image: string;
 }
