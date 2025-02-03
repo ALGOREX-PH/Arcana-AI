@@ -39,15 +39,15 @@ const TarotDeck: React.FC<TarotDeckProps> = ({ onCardSelect }) => {
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/90 p-4
-                            transition-opacity duration-300">
-                <div className="absolute bottom-4 left-4 right-4 text-center">
-                  <h3 className="font-cinzel text-xl text-gold font-bold mb-2">
+                            transition-opacity duration-300 flex flex-col justify-end">
+                <div className="w-full text-center bg-black/60 backdrop-blur-sm rounded-lg p-3">
+                  <h3 className="font-cinzel text-xl text-gold font-bold mb-1.5 drop-shadow-lg">
                     {selectedCard.name}
                   </h3>
-                  <p className="text-sm text-astral-blue/90 font-lora mb-2 line-clamp-2 group-hover:line-clamp-none transition-all duration-300">
+                  <p className="text-sm text-white font-lora mb-1.5 line-clamp-2 group-hover:line-clamp-none transition-all duration-300">
                     {selectedCard.description}
                   </p>
-                  <p className="text-sm text-gold/80 font-lora italic">
+                  <p className="text-sm text-gold font-lora italic drop-shadow">
                     {selectedCard.isReversed ? '(Reversed)' : '(Upright)'}
                   </p>
                 </div>
