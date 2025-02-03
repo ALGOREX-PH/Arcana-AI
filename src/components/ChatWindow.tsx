@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Send, Sparkles, MessageCircle } from 'lucide-react';
 import { TarotCard } from '../types';
+import { getTarotReading } from '../lib/gemini';
 
 interface ChatWindowProps {
   selectedCard: TarotCard | null;
@@ -17,9 +18,9 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ selectedCard, initialQuestion }
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Add initial question
     if (initialQuestion && messages.length === 0) {
       setMessages([{
         id: Date.now().toString(),
@@ -27,58 +28,70 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ selectedCard, initialQuestion }
         sender: 'user'
       }]);
     }
-  }, [initialQuestion]);
+  }, [initialQuestion, messages.length]);
 
   useEffect(() => {
-    if (selectedCard) {
-      const cardMessage = `You've drawn ${selectedCard.name}${selectedCard.isReversed ? ' (Reversed)' : ''}. 
-                          This card appears in response to your question: "${initialQuestion}"
-                          
-                          ${selectedCard.isReversed ? selectedCard.reversed : selectedCard.upright}
-                          
-                          What would you like to know more about?`;
-      
+    const getReading = async () => {
+      if (!selectedCard || !initialQuestion) return;
+
       setIsTyping(true);
-      setTimeout(() => {
+      setError(null);
+      
+      try {
+        const reading = await getTarotReading(initialQuestion, selectedCard);
         setMessages(prev => [...prev, {
           id: Date.now().toString(),
-          text: cardMessage,
+          text: reading,
           sender: 'ai'
         }]);
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : 'Failed to connect with the mystical forces. Please try again.';
+        setError(errorMessage);
+        console.error('Reading error:', err);
+      } finally {
         setIsTyping(false);
-      }, 1000);
+      }
+    };
+
+    if (selectedCard && initialQuestion) {
+      getReading();
     }
-  }, [selectedCard]);
+  }, [selectedCard, initialQuestion]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim()) return;
+    if (!input.trim() || !selectedCard) return;
 
-    // Add user message
-    setMessages(prev => [...prev, {
+    const userMessage = {
       id: Date.now().toString(),
       text: input,
-      sender: 'user'
-    }]);
-
-    // Simulate AI response
+      sender: 'user' as const
+    };
+    
+    setMessages(prev => [...prev, userMessage]);
+    setInput('');
     setIsTyping(true);
-    setTimeout(() => {
+    setError(null);
+
+    try {
+      const reading = await getTarotReading(input, selectedCard);
       setMessages(prev => [...prev, {
-        id: (Date.now() + 1).toString(),
-        text: "I sense that this card holds significant meaning for your question. The energies suggest...",
+        id: Date.now().toString(),
+        text: reading,
         sender: 'ai'
       }]);
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to connect with the mystical forces. Please try again.';
+      setError(errorMessage);
+      console.error('Reading error:', err);
+    } finally {
       setIsTyping(false);
-    }, 1500);
-
-    setInput('');
+    }
   };
 
   return (
     <div className="flex flex-col h-[600px] bg-purple-900/10 backdrop-blur-sm rounded-xl border border-gold/30
                     shadow-lg overflow-hidden">
-      {/* Messages area */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.map(message => (
           <div
@@ -92,7 +105,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ selectedCard, initialQuestion }
             }`}>
               {message.sender === 'ai' && <Sparkles className="w-4 h-4 mt-1" />}
               {message.sender === 'user' && <MessageCircle className="w-4 h-4 mt-1" />}
-              <span>{message.text}</span>
+              <span className="whitespace-pre-wrap">{message.text}</span>
             </div>
           </div>
         ))}
@@ -102,9 +115,13 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ selectedCard, initialQuestion }
             <span>Consulting the cards...</span>
           </div>
         )}
+        {error && (
+          <div className="text-red-400 text-center p-2 bg-red-900/20 rounded-lg border border-red-900/50">
+            {error}
+          </div>
+        )}
       </div>
 
-      {/* Input area */}
       <form onSubmit={handleSubmit} className="p-4 border-t border-gold/30">
         <div className="flex space-x-2">
           <input
@@ -117,9 +134,10 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ selectedCard, initialQuestion }
           />
           <button
             type="submit"
+            disabled={isTyping}
             className="px-4 py-2 bg-purple-900/50 hover:bg-purple-800/60 text-gold
                      rounded-lg border border-gold/30 transition-colors duration-300
-                     hover:shadow-lg hover:shadow-gold/20"
+                     hover:shadow-lg hover:shadow-gold/20 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Send className="w-5 h-5" />
           </button>
