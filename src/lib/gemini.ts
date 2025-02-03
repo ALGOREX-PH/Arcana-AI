@@ -1,13 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-// Initialize the Gemini API with your API key
-const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-
-if (!apiKey) {
-  throw new Error('VITE_GEMINI_API_KEY is not set in environment variables');
-}
-
-const genAI = new GoogleGenerativeAI(apiKey);
+const genAI = new GoogleGenerativeAI("AIzaSyAoWEGQxSYe2LuHGLQNRyvHMh52gDX6afQ");
 
 export async function getTarotReading(question: string, card: { name: string; description: string; isReversed: boolean; upright: string[]; reversed: string[] }) {
   if (!question || !card) {
