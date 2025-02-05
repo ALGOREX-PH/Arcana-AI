@@ -40,7 +40,7 @@ function App() {
           <div className="text-center space-y-8">
             <div className="mb-12">
               <img 
-                src="https://raw.githubusercontent.com/gdgmapua/gdgmapua.github.io/main/assets/img/gdg-logo.png" 
+                src="https://raw.githubusercontent.com/ALGOREX-PH/Arcana-AI/refs/heads/main/src/images/Copy%20of%20GDG%20On%20Campus%20-%20Centered%20-%20Template.png" 
                 alt="Google Developer Groups On Campus - Mapúa University Manila" 
                 className="h-24 mx-auto"
               />
