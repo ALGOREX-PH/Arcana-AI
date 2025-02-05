@@ -38,6 +38,13 @@ function App() {
         {!isReading ? (
           // Enhanced landing page
           <div className="text-center space-y-8">
+            <div className="mb-12">
+              <img 
+                src="https://raw.githubusercontent.com/gdgmapua/gdgmapua.github.io/main/assets/img/gdg-logo.png" 
+                alt="Google Developer Groups On Campus - Mapúa University Manila" 
+                className="h-24 mx-auto"
+              />
+            </div>
             <div className="relative inline-block">
               <h1 className="font-cinzel text-5xl md:text-6xl lg:text-7xl text-gold font-bold mb-6 animate-glow">
                 ArcanaAI
@@ -64,7 +71,7 @@ function App() {
                               translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
               </button>
               <p className="text-astral-blue/70 text-sm italic">
-                Seek guidance through the ancient wisdom of tarot
+                A project by Google Developer Groups On Campus - Mapúa University Manila
               </p>
             </div>
           </div>
