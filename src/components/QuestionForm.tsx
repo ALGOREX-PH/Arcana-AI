@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { Send, HelpCircle } from 'lucide-react';
+/*
 
+Coded by Danielle Bagaforo Meer
+Lets Connect : https://www.linkedin.com/in/algorexph
+
+*/
 interface QuestionFormProps {
   onSubmit: (question: string) => void;
 }

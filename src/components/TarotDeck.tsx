@@ -6,7 +6,12 @@ import { TAROT_DECK } from '../data/tarotDeck';
 interface TarotDeckProps {
   onCardSelect: (card: TarotCard) => void;
 }
+/*
 
+Coded by Danielle Bagaforo Meer
+Lets Connect : https://www.linkedin.com/in/algorexph
+
+*/
 const TarotDeck: React.FC<TarotDeckProps> = ({ onCardSelect }) => {
   const [isShuffling, setIsShuffling] = useState(false);
   const [selectedCard, setSelectedCard] = useState<TarotCard | null>(null);

@@ -4,7 +4,12 @@ import TarotDeck from './components/TarotDeck';
 import ChatWindow from './components/ChatWindow';
 import QuestionForm from './components/QuestionForm';
 import { TarotCard } from './types';
+/*
 
+Coded by Danielle Bagaforo Meer
+Lets Connect : https://www.linkedin.com/in/algorexph
+
+*/
 function App() {
   const [selectedCard, setSelectedCard] = useState<TarotCard | null>(null);
   const [isReading, setIsReading] = useState(false);

@@ -7,7 +7,12 @@ interface ChatWindowProps {
   selectedCard: TarotCard | null;
   initialQuestion: string;
 }
+/*
 
+Coded by Danielle Bagaforo Meer
+Lets Connect : https://www.linkedin.com/in/algorexph
+
+*/
 interface Message {
   id: string;
   text: string;
