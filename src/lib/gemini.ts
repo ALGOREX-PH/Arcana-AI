@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-const genAI = new GoogleGenerativeAI("AIzaSyAFrlGgnx5wmnik9-7bGQdWvi5RequNMZE");
+const genAI = new GoogleGenerativeAI("AIzaSyBO-w3iWUQDKbedw1ehOOCG1cd_DNBU4WM");
 
 export async function getTarotReading(question: string, card: { name: string; description: string; isReversed: boolean; upright: string[]; reversed: string[] }) {
   if (!question || !card) {
